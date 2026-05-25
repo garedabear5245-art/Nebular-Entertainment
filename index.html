@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +27,15 @@ html,body{
   justify-content:center;
   z-index:1;
   overflow:hidden;
+}
+.backgroundFrame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+  z-index:0;
+  pointer-events:none;
 }
 /* HOW TO PAGE */
 .howto{
@@ -352,9 +362,11 @@ iframe{
 <body>
 <!-- START SCREEN -->
 <div class="start" id="start">
+  <iframe class="backgroundFrame" id="backgroundFrame" src="background.html"></iframe>
+
   <div class="particles" id="particles"></div>
   <button class="settingsBtn" onclick="toggleSettings()">Settings</button>
- 
+
   <div class="settingsPanel" id="settingsPanel">
     <div style="font-weight:bold;">Settings</div>
     <div class="settingRow">
@@ -363,7 +375,7 @@ iframe{
     </div>
   </div>
   <div class="logo" id="logo3d">🎮 GAME HUB</div>
- 
+
   <div style="display:flex; gap:15px; z-index:2;">
     <button class="enterBtn" onclick="enterHub()">ENTER</button>
     <button class="howtoBtn" onclick="showHowTo()">HOW TO</button>
@@ -419,9 +431,6 @@ iframe{
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
-
 <script>
 // ====================== GAME DATA ======================
 let games = [];
@@ -465,30 +474,8 @@ function populateGames(){
   });
 }
 
-// ====================== VANTA & PARTICLES ======================
-let vantaEffect = null;
+// ====================== PARTICLES ======================
 let fancyEnabled = true;
-
-function initVanta(){
-  if(!fancyEnabled || vantaEffect) return;
-  vantaEffect = VANTA.FOG({
-    el:"#start",
-    mouseControls:true,
-    touchControls:true,
-    gyroControls:false,
-    highlightColor:0x8b5cf6,
-    midtoneColor:0x6d28d9,
-    lowlightColor:0x1e1b4b,
-    baseColor:0x050505,
-    blurFactor:0.65,
-    speed:1.5,
-    zoom:1.2
-  });
-}
-
-function destroyVanta(){
-  if(vantaEffect){ vantaEffect.destroy(); vantaEffect = null; }
-}
 
 function createParticles(){
   const container = document.getElementById("particles");
@@ -517,7 +504,6 @@ function mouseMoveEffect(e){
 function enterHub(){
   document.getElementById("start").style.display = "none";
   document.getElementById("browser").style.display = "flex";
-  destroyVanta();
   document.getElementById("particles").style.display = "none";
   document.removeEventListener("mousemove", mouseMoveEffect);
 
@@ -533,13 +519,11 @@ function back(){
   document.getElementById("start").style.display = "flex";
   document.getElementById("particles").style.display = "block";
   document.addEventListener("mousemove", mouseMoveEffect);
-  if(fancyEnabled) initVanta();
 }
 
 function showHowTo(){
   document.getElementById("start").style.display = "none";
   document.getElementById("howto").style.display = "flex";
-  destroyVanta();
   document.getElementById("particles").style.display = "none";
 }
 
@@ -547,7 +531,6 @@ function backToMain(){
   document.getElementById("howto").style.display = "none";
   document.getElementById("start").style.display = "flex";
   document.getElementById("particles").style.display = "block";
-  if(fancyEnabled) initVanta();
 }
 
 // ====================== GAME LAUNCHER ======================
@@ -601,22 +584,33 @@ function toggleSettings(){
 function toggleBG(){
   fancyEnabled = !fancyEnabled;
   const t = document.getElementById("bgToggle");
+  const bg = document.getElementById("backgroundFrame");
+
   if(fancyEnabled){
     t.classList.add("on");
-    if(document.getElementById("start").style.display !== "none") initVanta();
+    bg.style.display = "block";
   } else {
     t.classList.remove("on");
-    destroyVanta();
+    bg.style.display = "none";
   }
 }
 
 // ====================== INIT ======================
 window.addEventListener("load", () => {
   document.getElementById("bgToggle").classList.add("on");
-  initVanta();
   createParticles();
   document.addEventListener("mousemove", mouseMoveEffect);
 });
 </script>
 </body>
 </html>
+```
+
+Changes made:
+
+* Removed all Vanta + Three.js scripts.
+* Added `background.html` as a fullscreen iframe background.
+* Added `.backgroundFrame` CSS.
+* Replaced Vanta init/destroy logic with iframe show/hide logic.
+* Updated settings toggle to enable/disable the iframe background instead of Vanta.
+* Kept everything else unchanged.
