@@ -1,7 +1,228 @@
+# `index.html`
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Hub</title>
+
+<style>
+:root{
+  --primary:#c084fc;
+  --secondary:#6b21a8;
+}
+
+html,body{
+  margin:0;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  background:#050505;
+  color:white;
+}
+
+.start{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+#bgFrame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+  z-index:0;
+  pointer-events:none;
+}
+
+.content{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.settingsBtn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  z-index:5;
+  padding:10px 16px;
+  border:none;
+  border-radius:10px;
+  background:var(--primary);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.settingsPanel{
+  position:absolute;
+  top:70px;
+  right:20px;
+  width:240px;
+  background:#151515;
+  border:1px solid #2a2a2a;
+  border-radius:12px;
+  padding:12px;
+  display:none;
+  z-index:5;
+}
+
+.settingRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px;
+}
+
+.toggle{
+  width:40px;
+  height:22px;
+  background:#333;
+  border-radius:20px;
+  position:relative;
+  cursor:pointer;
+}
+
+.toggle::after{
+  content:"";
+  position:absolute;
+  width:16px;
+  height:16px;
+  top:3px;
+  left:3px;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
+}
+
+.toggle.on{
+  background:var(--primary);
+}
+
+.toggle.on::after{
+  left:21px;
+}
+
+.logo{
+  font-size:72px;
+  font-weight:900;
+  margin-bottom:40px;
+  background:linear-gradient(135deg,#fff,#c084fc,#6b21a8);
+  background-size:300% 300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:gradientMove 6s ease infinite;
+}
+
+.enterBtn,
+.howtoBtn{
+  padding:18px 40px;
+  margin:8px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(145deg,var(--primary),var(--secondary));
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.enterBtn:hover,
+.howtoBtn:hover{
+  transform:scale(1.05);
+}
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+</style>
+</head>
+<body>
+
+<div class="start" id="start">
+
+  <iframe id="bgFrame" src="background.html"></iframe>
+
+  <button class="settingsBtn" onclick="toggleSettings()">Settings</button>
+
+  <div class="settingsPanel" id="settingsPanel">
+    <div style="font-weight:bold; margin-bottom:10px;">Settings</div>
+
+    <div class="settingRow">
+      <span>Fancy Background</span>
+      <div class="toggle on" id="bgToggle" onclick="toggleBG()"></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="logo">🎮 GAME HUB</div>
+
+    <div>
+      <button class="enterBtn">ENTER</button>
+      <button class="howtoBtn">HOW TO</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let fancyEnabled = true;
+
+function toggleSettings(){
+  const panel = document.getElementById("settingsPanel");
+
+  panel.style.display = panel.style.display === "block"
+    ? "none"
+    : "block";
+}
+
+function toggleBG(){
+  fancyEnabled = !fancyEnabled;
+
+  const toggle = document.getElementById("bgToggle");
+  const bg = document.getElementById("bgFrame");
+
+  if(fancyEnabled){
+    toggle.classList.add("on");
+    bg.src = "background.html";
+    bg.style.display = "block";
+  }else{
+    toggle.classList.remove("on");
+    bg.style.display = "none";
+    bg.src = "about:blank";
+  }
+}
+</script>
+
+</body>
+</html>
+```
+
+---
+
+# `background.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 html,
 body{
@@ -13,101 +234,93 @@ body{
 }
 
 .bg{
-    background:url(https://i.ibb.co/87GbbFP/2799006.jpg) no-repeat;
+    background:url(https://i.ibb.co/87GbbFP/2799006.jpg) no-repeat center center;
     background-size:cover;
-    height:100%;
-    width:100%;
     position:fixed;
-    top:0;
-    left:0;
-    z-index:-3;
+    inset:0;
 }
 
-.bg:before{
+.bg::before{
     content:"";
-    width:100%;
-    height:100%;
-    background:#000;
-    position:fixed;
-    z-index:-1;
-    top:0;
-    left:0;
-    opacity:0.3;
-}
-
-@keyframes sf-fly-by-1{
-    from{
-        transform:translateZ(-600px);
-        opacity:0.5;
-    }
-    to{
-        transform:translateZ(0);
-        opacity:0.5;
-    }
-}
-
-@keyframes sf-fly-by-2{
-    from{
-        transform:translateZ(-1200px);
-        opacity:0.5;
-    }
-    to{
-        transform:translateZ(-600px);
-        opacity:0.5;
-    }
-}
-
-@keyframes sf-fly-by-3{
-    from{
-        transform:translateZ(-1800px);
-        opacity:0.5;
-    }
-    to{
-        transform:translateZ(-1200px);
-        opacity:0.5;
-    }
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.35);
 }
 
 .star-field{
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    inset:0;
     perspective:600px;
-    z-index:-1;
 }
 
-.star-field .layer{
-    box-shadow:
-        100px 200px white,
-        -200px -300px #ccc,
-        400px -100px #eee,
-        -500px 250px white,
-        700px 300px #ddd,
-        -700px -400px #fff,
-        850px -250px #ccc,
-        -850px 350px #eee;
-
-    transform-style:preserve-3d;
+.layer{
     position:absolute;
     top:50%;
     left:50%;
-    height:4px;
     width:4px;
-    border-radius:2px;
+    height:4px;
+    border-radius:50%;
+    background:white;
+    box-shadow:
+      -500px -400px #fff,
+      -300px 200px #ddd,
+      -100px -250px #fff,
+      100px 150px #ccc,
+      250px -300px #fff,
+      400px 250px #ddd,
+      600px -150px #fff,
+      800px 300px #ccc,
+      -700px 100px #fff,
+      500px -450px #ddd,
+      -850px -250px #fff,
+      900px -350px #ccc;
+
+    transform-style:preserve-3d;
 }
 
-.star-field .layer:nth-child(1){
-    animation:sf-fly-by-1 5s linear infinite;
+.layer:nth-child(1){
+    animation:fly1 6s linear infinite;
 }
 
-.star-field .layer:nth-child(2){
-    animation:sf-fly-by-2 5s linear infinite;
+.layer:nth-child(2){
+    animation:fly2 6s linear infinite;
 }
 
-.star-field .layer:nth-child(3){
-    animation:sf-fly-by-3 5s linear infinite;
+.layer:nth-child(3){
+    animation:fly3 6s linear infinite;
+}
+
+@keyframes fly1{
+    from{
+        transform:translateZ(-600px);
+        opacity:.5;
+    }
+    to{
+        transform:translateZ(0px);
+        opacity:.5;
+    }
+}
+
+@keyframes fly2{
+    from{
+        transform:translateZ(-1200px);
+        opacity:.5;
+    }
+    to{
+        transform:translateZ(-600px);
+        opacity:.5;
+    }
+}
+
+@keyframes fly3{
+    from{
+        transform:translateZ(-1800px);
+        opacity:.5;
+    }
+    to{
+        transform:translateZ(-1200px);
+        opacity:.5;
+    }
 }
 </style>
 </head>
@@ -116,10 +329,11 @@ body{
 <div class="bg"></div>
 
 <div class="star-field">
-    <div class="layer"></div>
-    <div class="layer"></div>
-    <div class="layer"></div>
+  <div class="layer"></div>
+  <div class="layer"></div>
+  <div class="layer"></div>
 </div>
 
 </body>
 </html>
+```
