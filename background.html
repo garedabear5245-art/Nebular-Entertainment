@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+html,
+body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:black;
+}
+
+.bg{
+    background:url(https://i.ibb.co/87GbbFP/2799006.jpg) no-repeat;
+    background-size:cover;
+    height:100%;
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-3;
+}
+
+.bg:before{
+    content:"";
+    width:100%;
+    height:100%;
+    background:#000;
+    position:fixed;
+    z-index:-1;
+    top:0;
+    left:0;
+    opacity:0.3;
+}
+
+@keyframes sf-fly-by-1{
+    from{
+        transform:translateZ(-600px);
+        opacity:0.5;
+    }
+    to{
+        transform:translateZ(0);
+        opacity:0.5;
+    }
+}
+
+@keyframes sf-fly-by-2{
+    from{
+        transform:translateZ(-1200px);
+        opacity:0.5;
+    }
+    to{
+        transform:translateZ(-600px);
+        opacity:0.5;
+    }
+}
+
+@keyframes sf-fly-by-3{
+    from{
+        transform:translateZ(-1800px);
+        opacity:0.5;
+    }
+    to{
+        transform:translateZ(-1200px);
+        opacity:0.5;
+    }
+}
+
+.star-field{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    perspective:600px;
+    z-index:-1;
+}
+
+.star-field .layer{
+    box-shadow:
+        100px 200px white,
+        -200px -300px #ccc,
+        400px -100px #eee,
+        -500px 250px white,
+        700px 300px #ddd,
+        -700px -400px #fff,
+        850px -250px #ccc,
+        -850px 350px #eee;
+
+    transform-style:preserve-3d;
+    position:absolute;
+    top:50%;
+    left:50%;
+    height:4px;
+    width:4px;
+    border-radius:2px;
+}
+
+.star-field .layer:nth-child(1){
+    animation:sf-fly-by-1 5s linear infinite;
+}
+
+.star-field .layer:nth-child(2){
+    animation:sf-fly-by-2 5s linear infinite;
+}
+
+.star-field .layer:nth-child(3){
+    animation:sf-fly-by-3 5s linear infinite;
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="star-field">
+    <div class="layer"></div>
+    <div class="layer"></div>
+    <div class="layer"></div>
+</div>
+
+</body>
+</html>
