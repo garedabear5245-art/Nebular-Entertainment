@@ -37,6 +37,12 @@
       "category": "driving"
     },
     {
+      "name": "Moto X3M",
+      "url": "PreGames/motox3m.html",
+      "img": "https://motox3mgame.org/data/image/game/moto-x3m-bike-race-game1.png",
+      "category": "driving"
+    },
+    {
       "name": "Slope",
       "url": "https://garebear5245-ux.github.io/Slope-Game1/",
       "img": "https://tse4.mm.bing.net/th/id/OIP.qTt8RTAIKmewE3x2mZStVQHaEO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
@@ -104,7 +110,7 @@
     },
     {
       "name": "Undertale",
-      "url": "https://garebear5245-ux.github.io/ut/",
+      "url": "PreGames/ut.html",
       "img": "https://ih0.redbubble.net/image.153688727.8011/flat,800x800,075,f.u1.jpg",
       "category": "rpg"
     },
@@ -113,6 +119,24 @@
       "url": "https://garebear5245-ux.github.io/earthbound/",
       "img": "https://wallpapers.com/images/hd/earthbound-logo-and-landscape-poster-d8i0sn4rl8z3v3lh.jpg",
       "category": "rpg"
+    },
+    {
+      "name": "Tunnel Rush",
+      "url": "PreGames/tunnelrush.html",
+      "img": "https://2games.io/data/image/game/tunnel-rush/tunnel-rush.png",
+      "category": "arcade"
+    },
+    {
+      "name": "Tag",
+      "url": "PreGames/tag.html",
+      "img": "https://images.sftcdn.net/images/t_app-cover-l,f_auto/p/6624b408-c84b-4546-b8ff-6625c6ff54cb/786394441/tag-game-screenshot.png",
+      "category": "arcade"
+    },
+    {
+      "name": "PaperIO2",
+      "url": "PreGames/paperio2.htm",
+      "img": "https://animalgenerator.org/images/games/paper-io-2.webp",
+      "category": "arcade"
     }
   ]
 }
